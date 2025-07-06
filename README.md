@@ -231,6 +231,65 @@ This project includes multiple GitHub Actions workflows for continuous integrati
 - **Building**: Verifies successful production build
 - **Artifacts**: Uploads build and coverage artifacts (with error handling)
 
+### Testing GitHub Actions Locally
+
+You can test GitHub Actions workflows locally using `act`:
+
+#### Installation
+
+```bash
+# macOS (using Homebrew)
+brew install act
+
+# Other platforms: https://github.com/nektos/act#installation
+```
+
+#### Usage
+
+```bash
+# Test the simple workflow (recommended)
+act pull_request -W .github/workflows/simple-test.yml
+
+# Test the main CI workflow
+act pull_request -W .github/workflows/ci.yml
+
+# Test the test-only workflow
+act pull_request -W .github/workflows/test.yml
+
+# List all available workflows
+act -l
+
+# Run with verbose output
+act pull_request -W .github/workflows/simple-test.yml -v
+```
+
+#### Important Notes
+
+- **Docker Required**: `act` uses Docker to simulate GitHub runners
+- **Environment Variables**: Create `.env` file for secrets if needed
+- **Artifact Uploads**: May not work locally (hence our simple workflow)
+- **Resource Usage**: Can be resource-intensive for complex workflows
+
+#### Recommended Workflow for Testing
+
+1. **Test locally first**: `act pull_request -W .github/workflows/simple-test.yml`
+2. **Fix any issues**: Update code and re-test
+3. **Push to GitHub**: Let the real workflows run
+4. **Use simple workflow**: Most reliable for both local and remote testing
+
+#### Quick Start (if you have act installed)
+
+```bash
+# Check if act is installed
+act --version
+
+# Test the simple workflow immediately
+act pull_request -W .github/workflows/simple-test.yml
+
+# If you get Docker permission errors, you might need:
+# sudo docker ps  # or configure Docker for non-root users
+```
+
 ## 🔧 Development
 
 ### Available Scripts
@@ -246,6 +305,18 @@ npm run test         # Run tests in watch mode
 npm run test:run     # Run tests once
 npm run test:ui      # Run tests with UI
 npm run test:coverage # Run tests with coverage
+```
+
+### GitHub Actions Testing
+
+```bash
+# Install act (macOS)
+brew install act
+
+# Test workflows locally
+act pull_request -W .github/workflows/simple-test.yml
+act pull_request -W .github/workflows/ci.yml
+act -l  # List all workflows
 ```
 
 ### Database Commands
