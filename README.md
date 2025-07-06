@@ -40,9 +40,7 @@ A modern, production-ready Next.js template featuring authentication, database i
 
 ### Option 1: Automated Setup (Recommended)
 
-Use our automated setup scripts for the fastest way to get started:
-
-#### Linux/macOS:
+Use our automated setup script for the fastest way to get started:
 
 ```bash
 git clone <your-repo-url>
@@ -50,31 +48,15 @@ cd base-nextjs-template
 ./setup.sh
 ```
 
-#### Windows (Command Prompt):
-
-```cmd
-git clone <your-repo-url>
-cd base-nextjs-template
-setup.bat
-```
-
-#### Windows (PowerShell):
-
-```powershell
-git clone <your-repo-url>
-cd base-nextjs-template
-.\setup.ps1
-```
-
 The setup script will:
 
-- ✅ Check all prerequisites
+- ✅ Check Docker and Docker Compose prerequisites
+- ✅ Create `.env` file from template
+- ✅ Start PostgreSQL with Docker Compose
 - ✅ Install npm dependencies
-- ✅ Create `.env` file with secure defaults
-- ✅ Start PostgreSQL with Docker (if available)
-- ✅ Generate Prisma client and run migrations
-- ✅ Run initial tests
-- ✅ Optionally start the development server
+- ✅ Generate Prisma client
+- ✅ Set up database schema
+- ✅ Seed database with sample data (including admin user)
 
 ### Option 2: Manual Setup
 
@@ -90,38 +72,47 @@ npm install
 
 #### 2. Environment Setup
 
-Create a `.env` file with the following variables:
+Copy the environment template and configure your variables:
+
+```bash
+cp env.example .env
+```
+
+The `.env` file will contain:
 
 ```env
 # Database
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="your-secret-key-here-replace-in-production"
 
-# OAuth providers (optional)
-GITHUB_ID="your-github-client-id"
-GITHUB_SECRET="your-github-client-secret"
+# Admin credentials (for seeding)
+ADMIN_EMAIL="admin@admin.com"
+ADMIN_PASSWORD="admin123"
 
-GOOGLE_ID="your-google-client-id"
-GOOGLE_SECRET="your-google-client-secret"
+# OAuth providers (optional)
+# GITHUB_ID="your-github-client-id"
+# GITHUB_SECRET="your-github-client-secret"
+# GOOGLE_ID="your-google-client-id"
+# GOOGLE_SECRET="your-google-client-secret"
 ```
 
 #### 3. Database Setup
 
 ```bash
-# Start PostgreSQL with Docker (optional)
-docker-compose up -d postgres
+# Start PostgreSQL with Docker
+docker compose up -d postgres
 
 # Generate Prisma client
-npx prisma generate
+npm run db:generate
 
-# Run database migrations
-npx prisma migrate dev
+# Set up database schema
+npm run db:push
 
 # (Optional) Seed the database
-npx prisma db seed
+npm run db:seed
 ```
 
 #### 4. Start Development Server
@@ -131,6 +122,15 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 🔐 Default Admin Credentials
+
+After running the setup script, you can log in with the default admin account:
+
+- **Email**: `admin@admin.com`
+- **Password**: `admin123`
+
+> **Note**: Change these credentials in production by updating the `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables.
 
 ## 📁 Project Structure
 
@@ -334,16 +334,28 @@ act pull_request -W .github/workflows/simple-test.yml
 ### Available Scripts
 
 ```bash
+# Development
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run start        # Start production server
+
+# Code Quality
 npm run lint         # Run ESLint
 npm run format       # Format code with Prettier
 npm run format:check # Check code formatting
+
+# Testing
 npm run test         # Run tests in watch mode
 npm run test:run     # Run tests once
 npm run test:ui      # Run tests with UI
 npm run test:coverage # Run tests with coverage
+
+# Database
+npm run db:generate  # Generate Prisma client
+npm run db:push      # Push schema changes to database
+npm run db:migrate   # Run database migrations
+npm run db:seed      # Seed database with sample data
+npm run db:studio    # Open Prisma Studio
 ```
 
 ### GitHub Actions Testing
@@ -361,21 +373,21 @@ act -l  # List all workflows
 ### Database Commands
 
 ```bash
-npx prisma studio          # Open Prisma Studio
-npx prisma generate        # Generate Prisma client
-npx prisma migrate dev     # Run migrations
-npx prisma db push         # Push schema changes
-npx prisma db seed         # Seed database
+npm run db:studio    # Open Prisma Studio
+npm run db:generate  # Generate Prisma client
+npm run db:migrate   # Run migrations
+npm run db:push      # Push schema changes
+npm run db:seed      # Seed database
 ```
 
 ### Docker Development
 
 ```bash
 # Start with Docker Compose
-docker-compose up -d
+docker compose up -d
 
 # Stop services
-docker-compose down
+docker compose down
 ```
 
 ## 🌐 Deployment
