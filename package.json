@@ -1,5 +1,5 @@
 {
-  "name": "chrisbull.com",
+  "name": "base-nextjs-template",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,12 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.21.1",
@@ -55,6 +60,6 @@
     "vitest": "^2.1.8"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "npx tsx prisma/seed.ts"
   }
 }
