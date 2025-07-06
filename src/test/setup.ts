@@ -22,24 +22,6 @@ vi.mock('next-auth/react', () => ({
   signOut: vi.fn(),
 }))
 
-// Mock framer-motion to avoid animation issues in tests
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: 'div',
-    span: 'span',
-    button: 'button',
-    h1: 'h1',
-    h2: 'h2',
-    h3: 'h3',
-    p: 'p',
-    section: 'section',
-    nav: 'nav',
-    header: 'header',
-    footer: 'footer',
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-}))
-
 // Global test utilities
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
