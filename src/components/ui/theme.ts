@@ -6,8 +6,8 @@ export const system = createSystem(defaultConfig, {
   theme: {
     tokens: {
       fonts: {
-        heading: { value: `'Inter', sans-serif` },
-        body: { value: `'Inter', sans-serif` },
+        heading: { value: `'Outfit', sans-serif` },
+        body: { value: `'Outfit', sans-serif` },
       },
     },
   },

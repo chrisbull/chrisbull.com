@@ -12,6 +12,7 @@ A modern, production-ready Next.js template featuring authentication, database i
 - **📱 Responsive Design** - Mobile-first approach
 - **🎭 Animations** - Framer Motion for smooth transitions
 - **🔧 Developer Experience** - TypeScript, ESLint, Prettier
+- **🧪 Testing** - Vitest with React Testing Library and coverage reports
 - **🐳 Docker Support** - Container setup with docker-compose
 
 ## 🛠️ Tech Stack
@@ -21,8 +22,10 @@ A modern, production-ready Next.js template featuring authentication, database i
 - **Database**: PostgreSQL with Prisma ORM
 - **Authentication**: NextAuth.js
 - **Styling**: Chakra UI v3 + Tailwind CSS v4
+- **Typography**: Outfit Google Font
 - **Animations**: Framer Motion
 - **Icons**: React Icons
+- **Testing**: Vitest + React Testing Library
 - **Code Quality**: ESLint + Prettier
 
 ## 🚀 Quick Start
@@ -154,11 +157,48 @@ export default async function Page() {
 
 Built with Chakra UI v3 and Tailwind CSS v4:
 
-- **Design System**: Consistent spacing, colors, and typography
+- **Design System**: Consistent spacing, colors, and typography with Outfit font
 - **Responsive**: Mobile-first responsive design
 - **Accessible**: ARIA compliant components
 - **Themeable**: Easy customization and branding
 - **Dark Mode**: Built-in light/dark theme support
+- **Typography**: Clean, modern Outfit Google Font
+
+## 🧪 Testing
+
+This project uses Vitest for fast and reliable testing:
+
+- **Unit Tests**: Test individual components and functions
+- **Integration Tests**: Test component interactions
+- **Coverage Reports**: Track test coverage with detailed reports
+- **Watch Mode**: Automatic test re-runs during development
+- **UI Mode**: Interactive test runner with web interface
+
+### Writing Tests
+
+Create test files with `.test.tsx` or `.test.ts` extensions:
+
+```tsx
+// src/components/__tests__/Button.test.tsx
+import { render, screen } from '@testing-library/react'
+import { describe, it, expect } from 'vitest'
+import { Button } from '../Button'
+
+describe('Button', () => {
+  it('renders button with text', () => {
+    render(<Button>Click me</Button>)
+    expect(screen.getByRole('button')).toHaveTextContent('Click me')
+  })
+})
+```
+
+### Testing Features
+
+- **React Testing Library**: Test components the way users interact with them
+- **Vitest**: Fast test runner with Jest-compatible API
+- **Coverage Reports**: Built-in coverage analysis
+- **Mocking**: Pre-configured mocks for Next.js, NextAuth, and Framer Motion
+- **Setup**: Global test setup with custom matchers and utilities
 
 ## 🔧 Development
 
@@ -171,6 +211,10 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run format       # Format code with Prettier
 npm run format:check # Check code formatting
+npm run test         # Run tests in watch mode
+npm run test:run     # Run tests once
+npm run test:ui      # Run tests with UI
+npm run test:coverage # Run tests with coverage
 ```
 
 ### Database Commands

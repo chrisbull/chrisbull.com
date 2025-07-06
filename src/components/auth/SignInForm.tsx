@@ -1,20 +1,25 @@
 'use client'
 
+import { Checkbox } from '@/components/ui/checkbox'
+import { PasswordInput } from '@/components/ui/password-input'
 import {
   Button,
+  Field,
   Icon,
   Input,
   Separator,
   Stack,
   Text,
+  Link,
   VStack,
+  HStack,
+  Spacer,
 } from '@chakra-ui/react'
 import {
   signIn,
   type ClientSafeProvider,
   type LiteralUnion,
 } from 'next-auth/react'
-import Link from 'next/link'
 import { useState } from 'react'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
 
@@ -84,21 +89,35 @@ export function SignInForm({ providers }: SignInFormProps) {
       {/* Email/Password Form */}
       <form onSubmit={handleCredentialsSignIn} style={{ width: '100%' }}>
         <Stack gap={4}>
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
+          <Field.Root>
+            <Field.Label>
+              Email
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+            <Field.HelperText />
+            <Field.ErrorText />
+          </Field.Root>
 
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
+          <Field.Root>
+            <Field.Label>
+              Password
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <PasswordInput
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+            <Field.HelperText />
+            <Field.ErrorText />
+          </Field.Root>
 
           {error && (
             <Text fontSize="sm" color="red.500" bg="red.50" p={2} rounded="md">
@@ -106,16 +125,32 @@ export function SignInForm({ providers }: SignInFormProps) {
             </Text>
           )}
 
+          <HStack>
+            <Checkbox>Remember Me</Checkbox>
+            <Spacer />
+            <Link
+              fontSize="sm"
+              href="/auth/forgot-password"
+              fontWeight="semibold"
+            >
+              Forgot Password?
+            </Link>
+          </HStack>
+
           <Button type="submit" w="full" loading={isLoading}>
-            Sign in with Email
+            Sign in
           </Button>
         </Stack>
       </form>
 
       {/* Registration Link */}
-      <Text fontSize="sm" color="gray.600">
+      <Text fontSize="sm">
         Don&apos;t have an account?{' '}
-        <Link href="/auth/register" style={{ textDecoration: 'underline' }}>
+        <Link
+          href="/auth/register"
+          textDecoration="underline"
+          fontWeight="semibold"
+        >
           Sign up
         </Link>
       </Text>
@@ -130,14 +165,14 @@ export function SignInForm({ providers }: SignInFormProps) {
             </Text>
             {oauthProviders.map(provider => {
               const IconComponent = getProviderIcon(provider.id)
-              const colorScheme = getProviderColor(provider.id)
+              const colorPalette = getProviderColor(provider.id)
 
               return (
                 <Button
                   key={provider.id}
                   onClick={() => signIn(provider.id)}
                   w="full"
-                  colorScheme={colorScheme}
+                  colorPalette={colorPalette}
                   variant="outline"
                 >
                   {IconComponent && <Icon as={IconComponent} me={2} />}

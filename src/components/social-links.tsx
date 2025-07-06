@@ -1,9 +1,9 @@
 import { HStack, IconButton } from '@chakra-ui/react'
 import Link from 'next/link'
-import { BsDiscord, BsGithub, BsTwitterX } from 'react-icons/bs'
+import { BsDiscord, BsGithub, BsLinkedin, BsTwitterX } from 'react-icons/bs'
 
 interface SocialLink {
-  type: 'x' | 'github' | 'discord'
+  type: 'x' | 'github' | 'discord' | 'linkedIn'
   href: string
 }
 
@@ -15,6 +15,7 @@ const iconMap = {
   x: <BsTwitterX />,
   github: <BsGithub />,
   discord: <BsDiscord />,
+  linkedIn: <BsLinkedin />,
 }
 
 export const SocialLinks = (props: SocialLinksProps) => {

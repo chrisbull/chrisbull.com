@@ -58,7 +58,12 @@ const DesktopNav = () => (
           <Link href={item.url}>{item.title}</Link>
         </HStack>
       ))}
-      <SocialLinks items={[{ type: 'github', href: siteConfig.githubUrl }]} />
+      <SocialLinks
+        items={[
+          { type: 'github', href: siteConfig.githubUrl },
+          { type: 'linkedIn', href: siteConfig.linkedInUrl },
+        ]}
+      />
     </HStack>
     <AuthButton />
     <ColorModeButton />

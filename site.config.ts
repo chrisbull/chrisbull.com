@@ -15,6 +15,7 @@ interface SiteConfig {
   copyright: string
   navigation: NavItem[]
   githubUrl: string
+  linkedInUrl: string
 }
 
 const APP_NAME = 'AppName'
@@ -36,5 +37,6 @@ export const siteConfig: SiteConfig = {
       url: '/about',
     },
   ],
-  githubUrl: 'https://github.com/',
+  githubUrl: 'https://github.com/chrisbull',
+  linkedInUrl: 'https://www.linkedin.com/in/chrisbull',
 }
