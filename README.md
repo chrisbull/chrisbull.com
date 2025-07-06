@@ -28,7 +28,7 @@ A modern, production-ready Next.js template featuring authentication, database i
 - **Icons**: React Icons
 - **Testing**: Vitest + React Testing Library
 - **CI/CD**: GitHub Actions
-- **Code Quality**: ESLint + Prettier
+- **Code Quality**: ESLint + Prettier + lint-staged
 
 ## 🚀 Quick Start
 
@@ -205,6 +205,29 @@ Built with Chakra UI v3 and Tailwind CSS v4:
 - **Dark Mode**: Built-in light/dark theme support
 - **Typography**: Clean, modern Outfit Google Font
 
+## 🔧 Code Quality & Git Hooks
+
+This project uses **lint-staged** with **Husky** to ensure code quality before commits:
+
+- **Pre-commit Hook**: Automatically runs ESLint and Prettier on staged files
+- **Lint-staged Configuration**: Only processes files that are staged for commit
+- **Automatic Fixing**: ESLint will attempt to fix issues automatically
+- **Consistent Formatting**: Prettier ensures consistent code style
+
+### Git Hooks
+
+The following git hooks are configured:
+
+- **pre-commit**: Runs `lint-staged` to check and fix code before committing
+
+### Manual Usage
+
+You can also run lint-staged manually:
+
+```bash
+npm run lint-staged  # Run linters on staged files
+```
+
 ## 🧪 Testing
 
 This project uses Vitest for fast and reliable testing:
@@ -343,6 +366,7 @@ npm run start        # Start production server
 npm run lint         # Run ESLint
 npm run format       # Format code with Prettier
 npm run format:check # Check code formatting
+npm run lint-staged  # Run linters on staged files
 
 # Testing
 npm run test         # Run tests in watch mode
