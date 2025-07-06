@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { Button, VStack, Icon, Text, Input, Stack } from '@chakra-ui/react'
-import { FaUser } from 'react-icons/fa'
+import { Button, VStack, Text, Input, Stack } from '@chakra-ui/react'
 import Link from 'next/link'
 
 export function RegisterForm() {
