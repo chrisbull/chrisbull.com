@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { Button, VStack, Text, Input, Stack } from '@chakra-ui/react'
 import Link from 'next/link'
+import { PasswordInput } from '@/components/ui/password-input'
+import { Field } from '@/components/ui/field'
 
 export function RegisterForm() {
   const [name, setName] = useState('')
@@ -87,37 +89,43 @@ export function RegisterForm() {
     <VStack gap={6} w="full">
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
         <Stack gap={4}>
-          <Input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-          />
+          <Field label="Full Name">
+            <Input
+              type="text"
+              placeholder="Full Name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+            />
+          </Field>
 
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
+          <Field label="Email">
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+            />
+          </Field>
 
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
+          <Field label="Password">
+            <PasswordInput
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+          </Field>
 
-          <Input
-            type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            required
-          />
+          <Field label="Confirm Password">
+            <PasswordInput
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              required
+            />
+          </Field>
 
           {error && (
             <Text fontSize="sm" color="red.500" bg="red.50" p={2} rounded="md">
