@@ -35,10 +35,52 @@ A modern, production-ready Next.js template featuring authentication, database i
 ### Prerequisites
 
 - Node.js 18+
-- PostgreSQL database
+- PostgreSQL database (or Docker for automatic setup)
 - Git
 
-### 1. Clone and Install
+### Option 1: Automated Setup (Recommended)
+
+Use our automated setup scripts for the fastest way to get started:
+
+#### Linux/macOS:
+
+```bash
+git clone <your-repo-url>
+cd base-nextjs-template
+./setup.sh
+```
+
+#### Windows (Command Prompt):
+
+```cmd
+git clone <your-repo-url>
+cd base-nextjs-template
+setup.bat
+```
+
+#### Windows (PowerShell):
+
+```powershell
+git clone <your-repo-url>
+cd base-nextjs-template
+.\setup.ps1
+```
+
+The setup script will:
+
+- ✅ Check all prerequisites
+- ✅ Install npm dependencies
+- ✅ Create `.env` file with secure defaults
+- ✅ Start PostgreSQL with Docker (if available)
+- ✅ Generate Prisma client and run migrations
+- ✅ Run initial tests
+- ✅ Optionally start the development server
+
+### Option 2: Manual Setup
+
+If you prefer to set up manually or need custom configuration:
+
+#### 1. Clone and Install
 
 ```bash
 git clone <your-repo-url>
@@ -46,19 +88,13 @@ cd base-nextjs-template
 npm install
 ```
 
-### 2. Environment Setup
+#### 2. Environment Setup
 
-Copy the example environment file and configure your variables:
-
-```bash
-cp .env.example .env
-```
-
-Update your `.env` file with:
+Create a `.env` file with the following variables:
 
 ```env
 # Database
-DATABASE_URL="postgresql://username:password@localhost:5432/your-database"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"
@@ -72,9 +108,12 @@ GOOGLE_ID="your-google-client-id"
 GOOGLE_SECRET="your-google-client-secret"
 ```
 
-### 3. Database Setup
+#### 3. Database Setup
 
 ```bash
+# Start PostgreSQL with Docker (optional)
+docker-compose up -d postgres
+
 # Generate Prisma client
 npx prisma generate
 
@@ -85,7 +124,7 @@ npx prisma migrate dev
 npx prisma db seed
 ```
 
-### 4. Start Development Server
+#### 4. Start Development Server
 
 ```bash
 npm run dev
