@@ -13,6 +13,7 @@ A modern, production-ready Next.js template featuring authentication, database i
 - **🎭 Animations** - Framer Motion for smooth transitions
 - **🔧 Developer Experience** - TypeScript, ESLint, Prettier
 - **🧪 Testing** - Vitest with React Testing Library and coverage reports
+- **🚀 CI/CD** - GitHub Actions for automated testing on pull requests
 - **🐳 Docker Support** - Container setup with docker-compose
 
 ## 🛠️ Tech Stack
@@ -26,6 +27,7 @@ A modern, production-ready Next.js template featuring authentication, database i
 - **Animations**: Framer Motion
 - **Icons**: React Icons
 - **Testing**: Vitest + React Testing Library
+- **CI/CD**: GitHub Actions
 - **Code Quality**: ESLint + Prettier
 
 ## 🚀 Quick Start
@@ -199,6 +201,35 @@ describe('Button', () => {
 - **Coverage Reports**: Built-in coverage analysis
 - **Mocking**: Pre-configured mocks for Next.js, NextAuth, and Framer Motion
 - **Setup**: Global test setup with custom matchers and utilities
+- **CI/CD Integration**: Automated testing on pull requests
+
+## 🚀 CI/CD
+
+This project includes multiple GitHub Actions workflows for continuous integration:
+
+### Simple Test Workflow (Recommended)
+
+- **File**: `.github/workflows/simple-test.yml`
+- **Triggers**: Pull requests and pushes to `main` and `develop` branches
+- **Actions**: Linting, formatting, tests, and coverage
+- **Reliable**: No external dependencies or artifact uploads
+
+### Test Workflow
+
+- **File**: `.github/workflows/test.yml`
+- **Triggers**: Pull requests to `main` and `develop` branches
+- **Actions**: Runs Vitest tests with coverage reporting
+- **Artifacts**: Attempts to upload coverage reports (with fallback)
+- **Node.js**: Tests against Node.js 18 with npm caching
+
+### Comprehensive CI Workflow
+
+- **File**: `.github/workflows/ci.yml`
+- **Linting**: ESLint code quality checks
+- **Formatting**: Prettier code formatting verification
+- **Testing**: Full test suite with coverage
+- **Building**: Verifies successful production build
+- **Artifacts**: Uploads build and coverage artifacts (with error handling)
 
 ## 🔧 Development
 
@@ -257,11 +288,21 @@ Ensure these are set in your production environment:
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Development workflow
+- Code standards
+- Testing requirements
+- Pull request process
+
+Quick start:
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Run tests (`npm run test:run`)
+4. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
 
 ## 📄 License
 

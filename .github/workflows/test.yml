@@ -1,0 +1,60 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Vitest
+        run: npm run test:run
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always() && runner.os == 'Linux'
+        continue-on-error: true
+        with:
+          name: coverage-reports-test
+          path: coverage/
+          retention-days: 7
+
+      - name: Coverage Summary
+        if: always()
+        run: |
+          echo "## Test Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "Coverage reports have been generated successfully." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Coverage Files Generated:" >> $GITHUB_STEP_SUMMARY
+            echo "- HTML Report: \`coverage/index.html\`" >> $GITHUB_STEP_SUMMARY
+            echo "- JSON Summary: \`coverage/coverage-summary.json\`" >> $GITHUB_STEP_SUMMARY
+            echo "- LCOV Report: \`coverage/lcov.info\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Download the coverage-reports-test artifact (if available) to view detailed coverage information." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Coverage reports could not be found." >> $GITHUB_STEP_SUMMARY
+          fi
