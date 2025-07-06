@@ -1,13 +1,26 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { Button, VStack, Text, Input, Stack } from '@chakra-ui/react'
-import Link from 'next/link'
+import { ClientSafeProvider, LiteralUnion, signIn } from 'next-auth/react'
+import {
+  Button,
+  VStack,
+  Text,
+  Input,
+  Stack,
+  Link,
+  Separator,
+  Icon,
+} from '@chakra-ui/react'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Field } from '@/components/ui/field'
+import { getProviderColor, getProviderIcon } from '@/components/auth/utils'
 
-export function RegisterForm() {
+interface RegisterFormProps {
+  providers: Record<LiteralUnion<string>, ClientSafeProvider> | null
+}
+
+export function RegisterForm({ providers }: RegisterFormProps) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -85,6 +98,10 @@ export function RegisterForm() {
     )
   }
 
+  const oauthProviders = providers
+    ? Object.values(providers).filter(provider => provider.id !== 'credentials')
+    : []
+
   return (
     <VStack gap={6} w="full">
       <form onSubmit={handleSubmit} style={{ width: '100%' }}>
@@ -139,12 +156,45 @@ export function RegisterForm() {
         </Stack>
       </form>
 
-      <Text fontSize="sm" color="gray.600">
+      <Text fontSize="sm" color="fg.muted">
         Already have an account?{' '}
-        <Link href="/auth/signin" style={{ textDecoration: 'underline' }}>
+        <Link
+          href="/auth/signin"
+          textDecoration="underline"
+          fontWeight="semibold"
+        >
           Sign in
         </Link>
       </Text>
+
+      {/* OAuth Providers */}
+      {oauthProviders.length > 0 && (
+        <>
+          <Separator />
+          <VStack gap={4} w="full">
+            <Text fontSize="sm" color="gray.600">
+              Or continue with
+            </Text>
+            {oauthProviders.map(provider => {
+              const IconComponent = getProviderIcon(provider.id)
+              const colorPalette = getProviderColor(provider.id)
+
+              return (
+                <Button
+                  key={provider.id}
+                  onClick={() => signIn(provider.id)}
+                  w="full"
+                  colorPalette={colorPalette}
+                  variant="outline"
+                >
+                  {IconComponent && <Icon as={IconComponent} me={2} />}
+                  Sign in with {provider.name}
+                </Button>
+              )
+            })}
+          </VStack>
+        </>
+      )}
     </VStack>
   )
 }

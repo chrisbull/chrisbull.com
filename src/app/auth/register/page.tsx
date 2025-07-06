@@ -2,8 +2,11 @@ import { Suspense } from 'react'
 import { RegisterForm } from '@/components/auth/RegisterForm'
 import { Container, Heading, Stack, Text, VStack } from '@chakra-ui/react'
 import { Logo } from '@/components/logo'
+import { getProviders } from 'next-auth/react'
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const providers = await getProviders()
+
   return (
     <Container maxW="md" py={10}>
       <VStack gap={6}>
@@ -13,7 +16,7 @@ export default function RegisterPage() {
           <Text>Create an account to get started</Text>
         </Stack>
         <Suspense fallback={<div>Loading...</div>}>
-          <RegisterForm />
+          <RegisterForm providers={providers} />
         </Suspense>
       </VStack>
     </Container>

@@ -1,19 +1,20 @@
 'use client'
 
+import { getProviderColor, getProviderIcon } from '@/components/auth/utils'
 import { Checkbox } from '@/components/ui/checkbox'
 import { PasswordInput } from '@/components/ui/password-input'
 import {
   Button,
   Field,
+  HStack,
   Icon,
   Input,
+  Link,
   Separator,
+  Spacer,
   Stack,
   Text,
-  Link,
   VStack,
-  HStack,
-  Spacer,
 } from '@chakra-ui/react'
 import {
   signIn,
@@ -21,7 +22,6 @@ import {
   type LiteralUnion,
 } from 'next-auth/react'
 import { useState } from 'react'
-import { FaGithub, FaGoogle } from 'react-icons/fa'
 
 interface SignInFormProps {
   providers: Record<LiteralUnion<string>, ClientSafeProvider> | null
@@ -55,28 +55,6 @@ export function SignInForm({ providers }: SignInFormProps) {
       setError('An error occurred during sign in')
     } finally {
       setIsLoading(false)
-    }
-  }
-
-  const getProviderIcon = (providerId: string) => {
-    switch (providerId) {
-      case 'github':
-        return FaGithub
-      case 'google':
-        return FaGoogle
-      default:
-        return null
-    }
-  }
-
-  const getProviderColor = (providerId: string) => {
-    switch (providerId) {
-      case 'github':
-        return 'gray'
-      case 'google':
-        return 'red'
-      default:
-        return 'blue'
     }
   }
 
@@ -144,7 +122,7 @@ export function SignInForm({ providers }: SignInFormProps) {
       </form>
 
       {/* Registration Link */}
-      <Text fontSize="sm">
+      <Text fontSize="sm" color="fg.muted">
         Don&apos;t have an account?{' '}
         <Link
           href="/auth/register"
