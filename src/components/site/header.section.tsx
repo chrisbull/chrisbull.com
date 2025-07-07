@@ -2,7 +2,6 @@
 
 import { Logo } from '@/components/logo'
 import { SocialLinks } from '@/components/social-links'
-import { AuthButton } from '@/components/auth/AuthButton'
 
 import {
   Button,
@@ -65,7 +64,6 @@ const DesktopNav = () => (
         ]}
       />
     </HStack>
-    <AuthButton />
     <ColorModeButton />
   </HStack>
 )

@@ -1,37 +1,19 @@
 'use client'
 
-import { getProviderColor, getProviderIcon } from '@/components/auth/utils'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Field } from '@/components/ui/field'
 import { PasswordInput } from '@/components/ui/password-input'
-import {
-  Button,
-  Field,
-  HStack,
-  Icon,
-  Input,
-  Link,
-  Separator,
-  Spacer,
-  Stack,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
-import {
-  signIn,
-  type ClientSafeProvider,
-  type LiteralUnion,
-} from 'next-auth/react'
+import { Button, Input, Stack, Text, VStack } from '@chakra-ui/react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-interface SignInFormProps {
-  providers: Record<LiteralUnion<string>, ClientSafeProvider> | null
-}
-
-export function SignInForm({ providers }: SignInFormProps) {
+export function SignInForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const router = useRouter()
 
   const handleCredentialsSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,8 +30,13 @@ export function SignInForm({ providers }: SignInFormProps) {
       if (result?.error) {
         setError('Invalid email or password')
       } else {
-        // Redirect to home page on successful login
-        window.location.href = '/'
+        // Check if we're on the admin page to redirect appropriately
+        const isAdminPage = window.location.pathname.startsWith('/admin')
+        if (isAdminPage) {
+          router.push('/admin/dashboard')
+        } else {
+          router.replace('/')
+        }
       }
     } catch {
       setError('An error occurred during sign in')
@@ -57,10 +44,6 @@ export function SignInForm({ providers }: SignInFormProps) {
       setIsLoading(false)
     }
   }
-
-  const oauthProviders = providers
-    ? Object.values(providers).filter(provider => provider.id !== 'credentials')
-    : []
 
   return (
     <VStack gap={6} w="full">
@@ -90,64 +73,11 @@ export function SignInForm({ providers }: SignInFormProps) {
             </Text>
           )}
 
-          <HStack>
-            <Checkbox>Remember Me</Checkbox>
-            <Spacer />
-            <Link
-              fontSize="sm"
-              href="/auth/forgot-password"
-              fontWeight="semibold"
-            >
-              Forgot Password?
-            </Link>
-          </HStack>
-
           <Button type="submit" w="full" loading={isLoading}>
             Sign in
           </Button>
         </Stack>
       </form>
-
-      {/* Registration Link */}
-      <Text fontSize="sm" color="fg.muted">
-        Don&apos;t have an account?{' '}
-        <Link
-          href="/auth/register"
-          textDecoration="underline"
-          fontWeight="semibold"
-        >
-          Sign up
-        </Link>
-      </Text>
-
-      {/* OAuth Providers */}
-      {oauthProviders.length > 0 && (
-        <>
-          <Separator />
-          <VStack gap={4} w="full">
-            <Text fontSize="sm" color="gray.600">
-              Or continue with
-            </Text>
-            {oauthProviders.map(provider => {
-              const IconComponent = getProviderIcon(provider.id)
-              const colorPalette = getProviderColor(provider.id)
-
-              return (
-                <Button
-                  key={provider.id}
-                  onClick={() => signIn(provider.id)}
-                  w="full"
-                  colorPalette={colorPalette}
-                  variant="outline"
-                >
-                  {IconComponent && <Icon as={IconComponent} me={2} />}
-                  Sign in with {provider.name}
-                </Button>
-              )
-            })}
-          </VStack>
-        </>
-      )}
     </VStack>
   )
 }

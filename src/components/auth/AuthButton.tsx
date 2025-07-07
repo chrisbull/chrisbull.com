@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, HStack, Text } from '@chakra-ui/react'
+import { Button, HStack } from '@chakra-ui/react'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 export function AuthButton() {
@@ -13,7 +13,6 @@ export function AuthButton() {
   if (session) {
     return (
       <HStack>
-        <Text fontSize="sm">Hello, {session.user?.name}</Text>
         <Button onClick={() => signOut()} variant="outline" size="sm">
           Sign Out
         </Button>
