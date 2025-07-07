@@ -4,7 +4,7 @@ import { Field } from '@/components/ui/field'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Button, Input, Stack, Text, VStack } from '@chakra-ui/react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export function SignInForm() {
@@ -35,7 +35,7 @@ export function SignInForm() {
         if (isAdminPage) {
           router.push('/admin/dashboard')
         } else {
-          router.replace('/')
+          router.push('/')
         }
       }
     } catch {
