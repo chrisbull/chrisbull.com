@@ -1,6 +1,8 @@
 import { PrismaClient } from '@/generated/prisma'
 import { hashPassword } from '@/lib/password'
 
+import { projects } from './projects'
+
 const prisma = new PrismaClient()
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@admin.com'
@@ -40,106 +42,6 @@ async function main() {
       create: { ...skill },
     })
   }
-
-  // Create sample projects
-  const projects = [
-    {
-      title: 'E-commerce Platform',
-      description: 'A modern e-commerce platform built with Next.js and Stripe',
-      longDescription: `This is a comprehensive e-commerce platform that demonstrates full-stack development capabilities. 
-      
-The project includes features like product management, shopping cart, payment processing, user authentication, and an admin dashboard.
-
-Key features:
-- Responsive design with mobile-first approach
-- Real-time inventory management
-- Secure payment processing with Stripe
-- User authentication and authorization
-- Admin dashboard for managing products and orders
-- Search and filtering capabilities
-- Order tracking and history
-
-Technical highlights:
-- Built with Next.js 14 and TypeScript
-- Prisma ORM with PostgreSQL database
-- Stripe integration for payments
-- NextAuth.js for authentication
-- Tailwind CSS for styling
-- Deployed on Vercel`,
-      slug: 'ecommerce-platform',
-      company: 'Tech Startup Co.',
-      projectUrl: 'https://example.com',
-      githubUrl: 'https://github.com/example/ecommerce',
-      featured: true,
-      published: true,
-      sortOrder: 1,
-      skills: ['TypeScript', 'React', 'Next.js', 'PostgreSQL', 'Prisma'],
-    },
-    {
-      title: 'Task Management App',
-      description:
-        'A collaborative task management application with real-time updates',
-      longDescription: `A comprehensive task management solution designed for teams and individuals to organize, track, and collaborate on projects effectively.
-
-Core Features:
-- Real-time collaboration with WebSocket integration
-- Drag-and-drop task organization
-- Team management and role-based permissions
-- Advanced filtering and search capabilities
-- File attachments and comments
-- Time tracking and reporting
-- Mobile-responsive design
-
-Technical Implementation:
-- Frontend: React with TypeScript and Chakra UI
-- Backend: Node.js with Express and Socket.io
-- Database: PostgreSQL with Prisma ORM
-- Authentication: JWT with refresh tokens
-- Real-time: WebSocket connections
-- File Storage: AWS S3 integration
-- Deployment: Docker containers on AWS ECS`,
-      slug: 'task-management-app',
-      company: 'Productivity Solutions Inc.',
-      projectUrl: 'https://taskapp.example.com',
-      githubUrl: 'https://github.com/example/taskapp',
-      featured: true,
-      published: true,
-      sortOrder: 2,
-      skills: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'AWS'],
-    },
-    {
-      title: 'Weather Dashboard',
-      description:
-        'A beautiful weather dashboard with location-based forecasts',
-      longDescription: `An intuitive weather dashboard that provides comprehensive weather information with a focus on user experience and visual design.
-
-Features:
-- Current weather conditions and 7-day forecasts
-- Location-based weather using geolocation API
-- Interactive weather maps and radar
-- Weather alerts and notifications
-- Historical weather data and trends
-- Multiple location management
-- Dark/light theme support
-
-Technical Stack:
-- Frontend: React with TypeScript and styled-components
-- Weather API: OpenWeatherMap integration
-- Maps: Mapbox GL JS for interactive maps
-- State Management: Redux Toolkit
-- Testing: Jest and React Testing Library
-- Build Tool: Vite for fast development
-- Deployment: Netlify with CI/CD`,
-      slug: 'weather-dashboard',
-      company: 'Personal Project',
-      projectUrl: 'https://weather.example.com',
-      githubUrl: 'https://github.com/example/weather',
-      featured: false,
-      published: true,
-      sortOrder: 3,
-      skills: ['TypeScript', 'React', 'GraphQL'],
-    },
-  ]
 
   for (const projectData of projects) {
     const { skills: skillNames, ...projectInfo } = projectData

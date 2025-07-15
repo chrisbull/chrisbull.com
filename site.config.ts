@@ -18,7 +18,7 @@ interface SiteConfig {
   linkedInUrl: string
 }
 
-const APP_NAME = 'AppName'
+const APP_NAME = 'Chris Bull'
 
 export const siteConfig: SiteConfig = {
   appName: APP_NAME,
