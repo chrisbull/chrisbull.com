@@ -64,14 +64,9 @@ export function SignInForm({ providers }: SignInFormProps) {
 
   return (
     <VStack gap={6} w="full">
-      {/* Email/Password Form */}
       <form onSubmit={handleCredentialsSignIn} style={{ width: '100%' }}>
         <Stack gap={4}>
-          <Field.Root>
-            <Field.Label>
-              Email
-              <Field.RequiredIndicator />
-            </Field.Label>
+          <Field label="Email">
             <Input
               type="email"
               placeholder="Email"
@@ -79,23 +74,15 @@ export function SignInForm({ providers }: SignInFormProps) {
               onChange={e => setEmail(e.target.value)}
               required
             />
-            <Field.HelperText />
-            <Field.ErrorText />
-          </Field.Root>
+          </Field>
 
-          <Field.Root>
-            <Field.Label>
-              Password
-              <Field.RequiredIndicator />
-            </Field.Label>
+          <Field label="Password">
             <PasswordInput
               onChange={e => setPassword(e.target.value)}
               placeholder="Password"
               required
             />
-            <Field.HelperText />
-            <Field.ErrorText />
-          </Field.Root>
+          </Field>
 
           {error && (
             <Text fontSize="sm" color="red.500" bg="red.50" p={2} rounded="md">
